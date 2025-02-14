@@ -3,12 +3,22 @@
     {
       "id": "Menu_SignIn",
       "nav_url": "index.php?page=Sec_Login",
-      "nav_label":"<i class=\"fas fa-sign-in-alt\"></i>&nbsp;Iniciar Sesión"
+      "nav_label":"<i class=\"fas fa-sign-in-alt\"></i>&nbsp;Home"
     },
      {
       "id": "Menu_SignUp",
       "nav_url": "index.php?page=Sec_Register",
-      "nav_label":"<i class=\"fas fa-sign-in-alt\"></i>&nbsp;Crear Cuenta"
+      "nav_label":"<i class=\"fas fa-sign-in-alt\"></i>&nbsp;Sign Up"
+    },
+    {
+      "id": "Menu_NuevaRequisa",
+      "nav_url": "index.php?page=Requisas-NuevaRequisa",
+      "nav_label":"<i class=\"fa-solid fa-plus\"></i>&nbsp;New Requisition"
+    },
+    {
+      "id": "Menu_MostrarRequisas",
+      "nav_url": "index.php?page=Requisas-MostrarRequisas",
+      "nav_label":"<i class=\"fa-solid fa-eye\"></i>&nbsp;Show Requisitions"
     }
   ],
   "private": [
