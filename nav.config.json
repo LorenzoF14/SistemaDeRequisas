@@ -3,7 +3,7 @@
     {
       "id": "Menu_SignIn",
       "nav_url": "index.php?page=Sec_Login",
-      "nav_label":"<i class=\"fas fa-sign-in-alt\"></i>&nbsp;Home"
+      "nav_label":"<i class=\"fas fa-sign-in-alt\"></i>&nbsp;Login"
     },
      {
       "id": "Menu_SignUp",
@@ -12,7 +12,7 @@
     },
     {
       "id": "Menu_NuevaRequisa",
-      "nav_url": "index.php?page=Requisas-NuevaRequisa",
+      "nav_url": "http://localhost/SistemaDeRequisas/index.php?page=Requisas-RequisasForm&mode=INS",
       "nav_label":"<i class=\"fa-solid fa-plus\"></i>&nbsp;New Requisition"
     },
     {

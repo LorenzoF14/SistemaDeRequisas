@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{SITE_TITLE}}</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/{{BASE_DIR}}/public/css/appstyle.css" />
@@ -28,7 +29,7 @@
     <h1>{{SITE_TITLE}}</h1>
     <nav id="menu">
       <ul>
-        <li><a href="index.php?page={{PRIVATE_DEFAULT_CONTROLLER}}"><i class="fas fa-home"></i>&nbsp;Inicio</a></li>
+        <li><a href="index.php?page={{PRIVATE_DEFAULT_CONTROLLER}}"><i class="fas fa-home"></i>&nbsp;Home</a></li>
         {{foreach NAVIGATION}}
             <li><a href="{{nav_url}}">{{nav_label}}</a></li>
         {{endfor NAVIGATION}}
@@ -43,7 +44,7 @@
     {{{page_content}}}
   </main>
   <footer>
-    <div>Todo los Derechos Reservados {{~CURRENT_YEAR}} &copy;</div>
+    <div>ResultsCX {{~CURRENT_YEAR}} &copy;</div>
   </footer>
   {{foreach EndScripts}}
   <script src="/{{~BASE_DIR}}/{{this}}"></script>
