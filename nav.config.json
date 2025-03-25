@@ -12,13 +12,18 @@
     },
     {
       "id": "Menu_NuevaRequisa",
-      "nav_url": "http://localhost/SistemaDeRequisas/index.php?page=Requisas-RequisasForm&mode=INS",
+      "nav_url": "index.php?page=Requisas-RequisasForm&mode=INS",
       "nav_label":"<i class=\"fa-solid fa-plus\"></i>&nbsp;New Requisition"
     },
     {
       "id": "Menu_MostrarRequisas",
       "nav_url": "index.php?page=Requisas-MostrarRequisas",
       "nav_label":"<i class=\"fa-solid fa-eye\"></i>&nbsp;Show Requisitions"
+    },
+    {
+      "id": "Menu_BuscarRequisas",
+      "nav_url": "index.php?page=Requisas-BuscarRequisas",
+      "nav_label":"<i class=\"fa-solid fa-magnifying-glass\"></i>&nbsp;Search Requisitions"
     }
   ],
   "private": [

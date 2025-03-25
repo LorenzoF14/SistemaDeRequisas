@@ -20,6 +20,8 @@ class RequisasForm extends PublicController
 
     private $errors = [];
 
+    private $xssToken = '';
+
     private function addError($error, $context='')
     {
         if (isset($this->errors[$context])){
@@ -42,7 +44,8 @@ class RequisasForm extends PublicController
         "director_approval" => 0,
         "date_received" => null,
         "received_by" => '',
-        "status" => 'ACT'
+        "status" => 'ACT',
+        "store" => ''
     ];
 
     public function run(): void
@@ -56,6 +59,11 @@ class RequisasForm extends PublicController
         }
         $this->generarViewData();
         Renderer::render('requisas/requisas_form', $this->viewData);
+        if (isset($_POST["btnCancelar"])) {
+            $returnPage = $_SESSION["return_page"] ?? "Requisas-MostrarRequisas";
+            Site::redirectTo("index.php?page=" . $returnPage);
+        }
+        $_SESSION["return_page"] = $_GET["from"] ?? "Requisas-MostrarRequisas";
     }
 
     private function inicializarForm()
@@ -93,9 +101,15 @@ class RequisasForm extends PublicController
             $this->requisa["date_received"] = null;
         }
         $this->requisa["received_by"] = $_POST["received_by"];
+        $this->requisa["store"] = $_POST["store"];
+
+        $this->xssToken = $_POST["xssToken"];
     }
 
     private function validarDatos(){
+        if(!$this->validarAntiXSSToken()){
+            \Utilities\Site::redirectToWithMsg('index.php?page=Requisas-MostrarRequisas', "There was an error processing this request.");
+        }
         if (Validators::IsEmpty($this->requisa["name_requester"])) {
             $this->addError("This field cannot be empty.", "name_requester");
         }
@@ -113,6 +127,9 @@ class RequisasForm extends PublicController
         }
         if ($this->requisa["total"] <= 0) {
             $this->addError("Please insert a value above 0.", "total");
+        }
+        if (Validators::IsEmpty($this->requisa["store"])) {
+            $this->addError("This field cannot be empty.", "store");
         }
         return count($this->errors) === 0;
     }
@@ -135,6 +152,20 @@ class RequisasForm extends PublicController
         }
     }
 
+    private function generateAntiXSSToken(){
+        $_SESSION["Requisas_Form_XSST"] = hash("sha256", time()."REQUISA_FORM");
+        $this->xssToken = $_SESSION["Requisas_Form_XSST"];
+    }
+
+    private function validarAntiXSSToken(){
+        if(isset($_SESSION["Requisas_Form_XSST"])) {
+            if($this->xssToken === $_SESSION["Requisas_Form_XSST"]){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private function generarViewData()
     {
         $this->viewData["mode"] = $this->mode;
@@ -148,10 +179,15 @@ class RequisasForm extends PublicController
         $this->viewData["readonly"] = 
             ($this->viewData["mode"] === 'DSP' 
         ) ? 'readonly': '';
+        $this->viewData["disabled"] = 
+            ($this->viewData["mode"] === 'DSP' 
+        ) ? 'disabled': '';
         foreach($this->errors as $context=>$errores) {
             $this->viewData[$context .'_error'] = $errores;
             $this->viewData[$context . '_haserror'] = count($errores) > 0;
         }
         $this->viewData["showSubmit"] = ($this->viewData["mode"] != 'DSP');
+        $this->generateAntiXSSToken();
+        $this->viewData["xssToken"] = $this->xssToken;
     }
 }

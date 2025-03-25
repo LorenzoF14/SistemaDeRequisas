@@ -20,6 +20,13 @@ class Requisas extends Table
         return $requisa;
     }
 
+    public static function obtenerRequisaPorRequester($requester)
+    {
+        $sqlstr = 'SELECT * FROM requisas WHERE name_requester LIKE :name_requester;';
+        $requisa = self::obtenerRegistros($sqlstr, ["name_requester" => "%" . $requester . "%"]);
+        return $requisa;
+    }
+
     public static function agregarRequisa($requisa)
     {
         unset($requisa['codigo']);
@@ -36,7 +43,8 @@ class Requisas extends Table
         department_approval, 
         director_approval, 
         date_received, 
-        received_by
+        received_by,
+        store
         ) 
         values(
         now(), 
@@ -49,7 +57,8 @@ class Requisas extends Table
         :department_approval, 
         :director_approval, 
         :date_received, 
-        :received_by);';
+        :received_by,
+        :store);';
         
         return self::executeNonQuery($sqlstr, $requisa);
     }
@@ -68,7 +77,8 @@ class Requisas extends Table
         department_approval = :department_approval, 
         director_approval = :director_approval, 
         date_received = :date_received, 
-        received_by = :received_by 
+        received_by = :received_by,
+        store = :store 
         where codigo = :codigo;";
 
         return self::executeNonQuery($sqlstr, $requisa);
@@ -78,5 +88,30 @@ class Requisas extends Table
     {
         $sqlstr = "delete from requisa where codigo = :codigo;";
         return self::executeNonQuery($sqlstr, ["codigo"=>$codigo]);
+    }
+
+    public static function cambiarEstadoRequisa($codigo, $estado)
+    {
+        $sqlstr = "UPDATE requisas SET status = :estado WHERE codigo = :codigo;";
+        return self::executeNonQuery($sqlstr, ["codigo" => $codigo,"estado" => $estado]);
+    }
+
+    public static function obtenerRequisasPorTienda($store = null, $orderByStore = false)
+    {
+        $sqlstr = 'SELECT * FROM requisas';
+        $params = [];
+
+        if ($store) {
+            $sqlstr .= ' WHERE store LIKE :store';
+            $params['store'] = "%" . $store . "%";
+        }
+
+        if ($orderByStore) {
+            $sqlstr .= ' ORDER BY store';
+        }
+
+        $sqlstr .= ';';
+        $requisas = self::obtenerRegistros($sqlstr, $params);
+        return $requisas;
     }
 }
