@@ -1,12 +1,12 @@
 <?php  
-
 namespace Controllers\Requisas;
 
 use Controllers\PrivateController;
 use Dao\Requisas\Requisas;
 use Views\Renderer;
+use Utilities\Site;
 
-class MostrarRequisas extends PrivateController 
+class RequisasAprobadas extends PrivateController 
 {
     public function run(): void 
     {
@@ -14,26 +14,27 @@ class MostrarRequisas extends PrivateController
             $codigo = $_GET["cambiarEstado"];
             $estado = $_GET["estado"];
             Requisas::cambiarEstadoRequisa($codigo, $estado);
-            \Utilities\Site::redirectTo("index.php?page=Requisas-MostrarRequisas");
+            Site::redirectTo("index.php?page=Requisas-requisasaprobadas");
         }
         $orderByStore = isset($_GET['orderByStore']) ? !$_GET['orderByStore'] : false;
-        $requisasDao = Requisas::obtenerRequisasPorTienda(null, $orderByStore);
-        $viewRequisas = [];
+        $requisasAprobadas = Requisas::obtenerRequisasAprobadas();
+        if ($orderByStore) {
+            usort($requisasAprobadas, function($a, $b) {
+                return strcmp($a['store'], $b['store']);
+            });
+        }
         $statusDscArr = [
             "ACT" => "Active",
             "FUL" => "Fullfilled"
         ];
-        foreach ($requisasDao as $requisas) {
-            if ($requisas["status"] === "ACT") {
-                $requisas["statusDsc"] = $statusDscArr[$requisas["status"]];
-                $viewRequisas[] = $requisas;
-            }
+        foreach ($requisasAprobadas as &$requisa) {
+            $requisa["statusDsc"] = $statusDscArr[$requisa["status"]];
         }
         $viewData = [
-            "requisas" => $viewRequisas,
+            "requisas" => $requisasAprobadas,
             "orderByStore" => $orderByStore,
             "FUL_enable" => $this->isFeatureAutorized('requisas_FUL_enabled')
         ];
-        Renderer::render('requisas/mostrarrequisas', $viewData);
+        Renderer::render('requisas/requisasaprobadas', $viewData);
     }
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
     <script src="/{{~BASE_DIR}}/{{this}}"></script>
   {{endfor BeginScripts}}
 </head>
+
 <body>
   <header>
     <input type="checkbox" class="menu_toggle" id="menu_toggle" />
@@ -31,13 +33,13 @@
         {{foreach PUBLIC_NAVIGATION}}
             <li><a href="{{nav_url}}">{{nav_label}}</a></li>
         {{endfor PUBLIC_NAVIGATION}}
-        
+
       </ul>
       <img src="public/imgs/logo.svg" alt="ResultsCX Logo">
     </nav>
   </header>
   <main>
-  {{{page_content}}}
+    {{{page_content}}}
   </main>
   <footer>
     <div>ResultsCX {{~CURRENT_YEAR}} &copy;</div>

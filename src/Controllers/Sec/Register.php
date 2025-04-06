@@ -19,22 +19,21 @@ class Register extends PublicController
         if ($this->isPostBack()) {
             $this->txtEmail = $_POST["txtEmail"];
             $this->txtPswd = $_POST["txtPswd"];
-            //validaciones
             if (!(Validators::IsValidEmail($this->txtEmail))) {
-                $this->errorEmail = "El correo no tiene el formato adecuado";
+                $this->errorEmail = "Please enter a valid email address";
                 $this->hasErrors = true;
             }
             if (!Validators::IsValidPassword($this->txtPswd)) {
-                $this->errorPswd = "La contraseña debe tener al menos 8 caracteres una mayúscula, un número y un caracter especial.";
+                $this->errorPswd = "Your password must be at least 8 characters long and must contain at least one uppercase letter, one number, and one special character.";
                 $this->hasErrors = true;
             }
 
             if (!$this->hasErrors) {
                 try{
                     if (\Dao\Security\Security::newUsuario($this->txtEmail, $this->txtPswd)) {
-                        \Utilities\Site::redirectToWithMsg("index.php?page=sec_login", "¡Usuario Registrado Satisfactoriamente!");
+                        \Utilities\Site::redirectToWithMsg("index.php?page=sec_register", "Registration successful!");
                     }
-                } catch (Error $ex){
+                } catch (\Error $ex){
                     die($ex);
                 }
             }

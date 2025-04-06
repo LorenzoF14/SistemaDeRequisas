@@ -33,8 +33,9 @@
         {{foreach NAVIGATION}}
             <li><a href="{{nav_url}}">{{nav_label}}</a></li>
         {{endfor NAVIGATION}}
-        <li><a href="index.php?page=sec_logout"><i class="fas fa-sign-out-alt"></i>&nbsp;Salir</a></li>
+        <li><a href="index.php?page=sec_logout"><i class="fas fa-sign-out-alt"></i>&nbsp;Log Out</a></li>
       </ul>
+      <img src="public/imgs/logo.svg" alt="ResultsCX Logo">
     </nav>
     {{with login}}
     <span class="username">{{userName}} <a href="index.php?page=sec_logout"><i class="fas fa-sign-out-alt"></i></a></span>

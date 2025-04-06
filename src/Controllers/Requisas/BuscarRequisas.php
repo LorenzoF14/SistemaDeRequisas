@@ -2,14 +2,14 @@
 
 namespace Controllers\Requisas;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Dao\Requisas\Requisas;
 use Views\Renderer;
 use Utilities\Site;
 
 const SESSION_REQUISAS_SEARCH = "requisas_search_data";
 
-class BuscarRequisas extends PublicController 
+class BuscarRequisas extends PrivateController 
 {
     public function run(): void 
     {

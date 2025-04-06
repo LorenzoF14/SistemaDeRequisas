@@ -1,1 +1,1 @@
-<h1>¡No tiene permiso de acceder a este recurso!</h1>
+<h1>You are not authorized to access this page</h1>

@@ -2,13 +2,13 @@
 
 namespace Controllers\Requisas;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Utilities\Validators;
 use Views\Renderer;
 use Utilities\Site;
 use Dao\Requisas\Requisas;
 
-class RequisasForm extends PublicController
+class RequisasForm extends PrivateController
 {
     private $viewData = [];
     private $modeDscArr = [
@@ -71,7 +71,7 @@ class RequisasForm extends PublicController
         if (isset($_GET["mode"]) && isset($this->modeDscArr[$_GET["mode"]])) {
             $this->mode = $_GET["mode"];
         } else {
-            Site::redirectToWithMsg("index.php?page=Requisas-MostrarRequisas", "Something Went Wrong, Try Again.");
+            Site::redirectToWithMsg("index.php?page=Index", "Something Went Wrong, Try Again.");
             die();
         }
         if ($this->mode !== 'INS' && isset($_GET["codigo"])) {
@@ -93,14 +93,18 @@ class RequisasForm extends PublicController
         $this->requisa["item"] = $_POST["item"];
         $this->requisa["unit_cost"] = floatval($_POST["unit_cost"]);
         $this->requisa["total"] = floatval($_POST["total"]);
-        $this->requisa["department_approval"] = isset($_POST["department_approval"]) ? 1 : 0;
-        $this->requisa["director_approval"] = isset($_POST["director_approval"]) ? 1 : 0;
+        if (isset($_POST["department_approval"])) {
+            $this->requisa["department_approval"] = 1;
+        }
+        if (isset($_POST["director_approval"])) {
+            $this->requisa["director_approval"] = 1;
+        }
         if (isset($_POST["date_received"]) && !empty($_POST["date_received"])) {
             $this->requisa["date_received"] = date('Y-m-d H:i:s', strtotime($_POST["date_received"]));
         } else {
             $this->requisa["date_received"] = null;
         }
-        $this->requisa["received_by"] = $_POST["received_by"];
+        $this->requisa["received_by"] = isset($_POST["received_by"]) ? $_POST["received_by"] : '';
         $this->requisa["store"] = $_POST["store"];
 
         $this->xssToken = $_POST["xssToken"];
@@ -108,7 +112,7 @@ class RequisasForm extends PublicController
 
     private function validarDatos(){
         if(!$this->validarAntiXSSToken()){
-            \Utilities\Site::redirectToWithMsg('index.php?page=Requisas-MostrarRequisas', "There was an error processing this request.");
+            Site::redirectToWithMsg('index.php?page=Index', "There was an error processing this request.");
         }
         if (Validators::IsEmpty($this->requisa["name_requester"])) {
             $this->addError("This field cannot be empty.", "name_requester");
@@ -140,13 +144,14 @@ class RequisasForm extends PublicController
             case 'INS':
                 $result = Requisas::agregarRequisa($this->requisa);
                 if ($result) {
-                    Site::redirectToWithMsg("index.php?page=Requisas-MostrarRequisas", "Requisition submitted successfully.");
+                    Site::redirectToWithMsg("index.php?page=Index", "Requisition submitted successfully.");
                 }
                 break;
             case 'UPD':
                 $result = Requisas::actualizarRequisa($this->requisa);
                 if ($result) {
-                    Site::redirectToWithMsg("index.php?page=Requisas-MostrarRequisas", "Requisition updated successfully.");
+                    $returnPage = $_SESSION["return_page"] ?? "Requisas-MostrarRequisas";
+                    Site::redirectToWithMsg("index.php?page=" .$returnPage, "Requisition updated successfully.");
                 }
                 break;
         }
@@ -182,6 +187,11 @@ class RequisasForm extends PublicController
         $this->viewData["disabled"] = 
             ($this->viewData["mode"] === 'DSP' 
         ) ? 'disabled': '';
+        $this->viewData["date_requested_attrs"] = ($this->mode !== 'INS') ? 'readonly' : '';
+        $this->viewData["department_approval_enable"] = $this->isFeatureAutorized('requisas_department_approval_enabled');
+        $this->viewData["director_approval_enable"] = $this->isFeatureAutorized('requisas_director_approval_enabled');
+        $this->viewData["date_received_enable"] = $this->isFeatureAutorized('requisas_date_received_enabled');
+        $this->viewData["received_by_enable"] = $this->isFeatureAutorized('requisas_received_by_enabled');
         foreach($this->errors as $context=>$errores) {
             $this->viewData[$context .'_error'] = $errores;
             $this->viewData[$context . '_haserror'] = count($errores) > 0;

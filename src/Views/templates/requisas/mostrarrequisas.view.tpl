@@ -46,9 +46,11 @@
                     <a href="index.php?page=Requisas-RequisasForm&mode=DSP&codigo={{codigo}}">
                         <i class="fa-solid fa-eye"></i>
                     </a>
+                    {{if ~FUL_enable}}
                     <a href="#" onclick="confirmarCambioEstado('{{codigo}}')">
                         <i class="fa-solid fa-square-check" style="color: #16df37;"></i>
                     </a>
+                    {{endif ~FUL_enable}}
                 </td>
             </tr>
             {{endfor requisas}}

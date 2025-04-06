@@ -4,11 +4,13 @@
       "id": "Menu_SignIn",
       "nav_url": "index.php?page=Sec_Login",
       "nav_label":"<i class=\"fas fa-sign-in-alt\"></i>&nbsp;Login"
-    },
-     {
+    }
+  ],
+  "private": [
+    {
       "id": "Menu_SignUp",
       "nav_url": "index.php?page=Sec_Register",
-      "nav_label":"<i class=\"fas fa-sign-in-alt\"></i>&nbsp;Sign Up"
+      "nav_label":"<i class=\"fas fa-user-plus\"></i>&nbsp;Create User"
     },
     {
       "id": "Menu_NuevaRequisa",
@@ -18,19 +20,22 @@
     {
       "id": "Menu_MostrarRequisas",
       "nav_url": "index.php?page=Requisas-MostrarRequisas",
-      "nav_label":"<i class=\"fa-solid fa-eye\"></i>&nbsp;Show Requisitions"
+      "nav_label":"<i class=\"fa-solid fa-eye\"></i>&nbsp;Active Requisitions"
+    },
+    {
+      "id": "Menu_RequisasAprobadas",
+      "nav_url": "index.php?page=Requisas-RequisasAprobadas",
+      "nav_label":"<i class=\"fa-solid fa-cart-shopping\"></i>&nbsp;Ready To Buy Requisitions"
     },
     {
       "id": "Menu_BuscarRequisas",
       "nav_url": "index.php?page=Requisas-BuscarRequisas",
       "nav_label":"<i class=\"fa-solid fa-magnifying-glass\"></i>&nbsp;Search Requisitions"
-    }
-  ],
-  "private": [
+    },
     {
-      "id":"Menu_PaymentCheckout",
-      "nav_url": "index.php?page=Checkout_Checkout",
-      "nav_label": "Carretilla de Compra"
+      "id": "Menu_RolesList",
+      "nav_url": "index.php?page=Requisas-RolesList",
+      "nav_label":"<i class=\"fa-solid fa-shield-halved\"></i>&nbsp;Show Roles"
     }
   ]
 }

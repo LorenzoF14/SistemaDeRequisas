@@ -6,8 +6,8 @@
             <div class="col-12 col-m-4">
                 <div class="column">
                     <label for="date_requested">Date Requested</label>
-                    <input type="datetime-local" name="date_requested" value="{{date_requested}}" {{~readonly}}/>
-                    <input type="hidden" name="xssToken" value="{{~xssToken}}"/>
+                    <input type="datetime-local" name="date_requested" value="{{date_requested}}" {{date_requested_attrs}} />
+                    <input type="hidden" name="xssToken" value="{{~xssToken}}" />
                 </div>
             </div>
             <div class="col-12 col-m-4">
@@ -119,28 +119,36 @@
             </div>
         </div>
         <div class="row">
+            {{if ~department_approval_enable}}
             <div class="col-12 col-m-6">
                 <label for="department_approval" class="label-spacing">Department Approval</label>
                 <input class="col-1" type="checkbox" name="department_approval" {{if department_approval}}checked{{endif department_approval}} {{~disabled}}/>
             </div>
+            {{endif ~department_approval_enable}}
+            {{if ~director_approval_enable}}
             <div class="col-12 col-m-6">
                 <label for="director_approval" class="label-spacing">Director Approval</label>
                 <input type="checkbox" name="director_approval" {{if director_approval}}checked{{endif director_approval}} {{~disabled}}/>
             </div>
+            {{endif ~director_approval_enable}}
         </div>
         <div class="row">
+            {{if ~date_received_enable}}
             <div class="col-12 col-m-6">
                 <div class="column">
                     <label for="date_received">Date Received</label>
                     <input type="datetime-local" name="date_received" value="{{date_received}}" {{~readonly}}/>
                 </div>
             </div>
+            {{endif ~date_received_enable}}
+            {{if ~received_by_enable}}
             <div class="col-12 col-m-6">
                 <div class="column">
                     <label for="received_by">Received By</label>
                     <input type="text" name="received_by" value="{{received_by}}" {{~readonly}}/>
                 </div>
             </div>
+            {{endif ~received_by_enable}}
         </div>
         <div class="row flex-center">
             <div>

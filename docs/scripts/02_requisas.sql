@@ -11,5 +11,6 @@ CREATE TABLE requisas(
     director_approval tinyint(1) DEFAULT NULL,
     date_received DATETIME DEFAULT NULL,
     received_by VARCHAR(128) DEFAULT NULL,
+    store VARCHAR(128) DEFAULT NULL,
     status CHAR(3) DEFAULT 'ACT'
 ) COMMENT 'Tabla que registra toda la informacion de las requisas de ResultsCX';

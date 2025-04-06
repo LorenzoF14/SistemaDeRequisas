@@ -114,4 +114,10 @@ class Requisas extends Table
         $requisas = self::obtenerRegistros($sqlstr, $params);
         return $requisas;
     }
+
+    public static function obtenerRequisasAprobadas()
+    {
+        $sqlstr = 'SELECT * FROM requisas WHERE department_approval = 1 AND director_approval = 1 AND status = "ACT";';
+        return self::obtenerRegistros($sqlstr, []);
+    }
 }
