@@ -50,14 +50,13 @@ class Security extends \Dao\Table
     static public function newUsuario($email, $password)
     {
         if (!\Utilities\Validators::IsValidEmail($email)) {
-            throw new Exception("Correo no es válido");
+            throw new Exception("The email address you provided is not valid");
         }
         if (!\Utilities\Validators::IsValidPassword($password)) {
-            throw new Exception("Contraseña debe ser almenos 8 caracteres, 1 número, 1 mayúscula, 1 símbolo especial");
+            throw new Exception("Password must be 8 characters and must have 1 number, 1 uppercase and 1 symbol");
         }
 
         $newUser = self::_usuarioStruct();
-        //Tratamiento de la Contraseña
         $hashedPassword = self::_hashPassword($password);
 
         unset($newUser["usercod"]);

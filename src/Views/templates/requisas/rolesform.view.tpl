@@ -1,31 +1,38 @@
 <h1>{{modes_dsc}}</h1>
-<section>
-    <form action="index.php?page=Requisas-RolesForm&mode={{mode}}&rolescod={{rolescod}}" method="post" class="row">
+<section class="grid">
+    <form action="index.php?page=Requisas-RolesForm&mode={{mode}}&rolescod={{rolescod}}" method="post" class="column">
         {{with rol}}
-        <div class="row col-8 offset-2">
-            <label class="col-4" for="rolescod">Codigo Rol</label>
-            <input class="col-8" type="text" name="rolescod" id="rolescod" value="{{rolescod}}" {{readonly}}>
+        <div class="row">
+            <div class="col-12 col-m-4">
+                <div class="column">
+                    <label for="rolescod">Role Name</label>
+                    <input type="text" name="rolescod" id="rolescod" value="{{rolescod}}" {{readonly}} />
+                </div>
+            </div>
+            <div class="col-12 col-m-4">
+                <div class="column">
+                    <label for="rolesdsc">Description</label>
+                    <input type="text" name="rolesdsc" id="rolesdsc" value="{{rolesdsc}}" {{~readonly}} />
+                </div>
+            </div>
+            <div class="col-12 col-m-4">
+                <div class="column">
+                    <label for="rolesest">Status</label>
+                    <input type="text" name="rolesest" id="rolesest" value="{{rolesest}}" {{~readonly}} />
+                </div>
+            </div>
         </div>
-        <div class="row col-8 offset-2">
-            <label class="col-4" for="rolesdsc">Descripcion del rol</label>
-            <input class="col-8" type="text" name="rolesdsc" id="rolesdsc" value="{{rolesdsc}}" {{~readonly}}>
-        </div>
-        <div class="row col-8 offset-2">
-            <label class="col-4" for="rolesest">Estado del rol</label>
-            <input class="col-8" type="rolesest" name="rolesest" id="rolesest" value="{{rolesest}}" {{~readonly}}>
-        </div>
-        <div class="row flex-center" style="margin-top: 10px;">
-            {{if ~showConfirm}}
-                <button type="submit" class="primary">Confirmar</button> &nbsp;
-            {{endif ~showConfirm}}
-            <button id="btnCancelar" class="btn">Cancelar</button>
-
+        <div class="row flex-center">
+            <div>
+                {{if ~showConfirm}}
+                    <button type="submit" class="primary">Submit</button>&nbsp;
+                {{endif ~showConfirm}}
+                <button type="button" id="btnCancelar">Cancel</button>
+            </div>
         </div>
         {{endwith rol}}
     </form>
-    
 </section>
-
 
 <script>
     document.addEventListener("DOMContentLoaded", ()=>{

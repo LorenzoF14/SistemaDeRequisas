@@ -120,4 +120,18 @@ class Requisas extends Table
         $sqlstr = 'SELECT * FROM requisas WHERE department_approval = 1 AND director_approval = 1 AND status = "ACT";';
         return self::obtenerRegistros($sqlstr, []);
     }
+
+    public static function obtenerRequisasPorUsuario($username, $isAdmin = false)
+    {
+        $sqlstr = 'SELECT * FROM requisas';
+        $params = [];
+
+        if (!$isAdmin) {
+            $sqlstr .= ' WHERE name_requester = :requester';
+            $params['requester'] = $username;
+        }
+
+        $sqlstr .= ' ORDER BY date_requested DESC;';
+        return self::obtenerRegistros($sqlstr, $params);
+    }
 }

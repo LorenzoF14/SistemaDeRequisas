@@ -11,10 +11,10 @@ use Dao\Requisas\RolesD;
 class RolesForm extends PrivateController{
     private $viewData=[];
     private $modeDscArr=[
-        "INS"=>"Crear nuevo Rol",
-        "UPD"=>"Editando %s (%s)",
-        "DSP"=>"Detalle de %s (%s)",
-        "DEL"=>"Eliminando %s (%s)",
+        "INS"=>"Creating new role",
+        "UPD"=>"Updating %s (%s)",
+        "DSP"=>"Showing de %s (%s)",
+        "DEL"=>"Deleting %s (%s)",
     ];
     private $mode='';
     private $rol=[
@@ -38,7 +38,7 @@ class RolesForm extends PrivateController{
         if(isset($_GET["mode"]) && isset($this->modeDscArr[$_GET["mode"]])){
             $this ->mode =$_GET["mode"];
         }else{
-            Site::redirectToWithMsg("index.php?page=Requisas-RolesList","Algo sucedio mal! intente de nuevo");
+            Site::redirectToWithMsg("index.php?page=Requisas-RolesList","Something went wrong! Try again.");
             die();
         }
 
@@ -58,8 +58,6 @@ class RolesForm extends PrivateController{
     $this->rol["rolescod"]=$_POST["rolescod"];
     $this->rol["rolesdsc"]=$_POST["rolesdsc"];
     $this->rol["rolesest"]=$_POST["rolesest"];
-    
- 
     }
 
     private function procesarAccion(){
@@ -67,21 +65,20 @@ class RolesForm extends PrivateController{
             case 'INS':
                 $result=RolesD::agregarRoles($this->rol);
                 if($result){
-                    Site::redirectToWithMsg("index.php?page=Requisas-RolesList","El rol se registro satisfactoriamente!");
+                    Site::redirectToWithMsg("index.php?page=Requisas-RolesList","Role was submitted successfully!");
                 }
                 break;
             case 'UPD':
                 $result=RolesD::actualizarRoles($this->rol);
                 if($result){
-                    Site::redirectToWithMsg("index.php?page=Requisas-RolesList","El registro del Rol fue actualizado satisfactoriamente!");
+                    Site::redirectToWithMsg("index.php?page=Requisas-RolesList","Role was updated successfully!");
                 }
                 break;
             case 'DEL':
                 $result=RolesD::eliminarRoles($this->rol['rolescod']);
                 if($result){
-                    Site::redirectToWithMsg("index.php?page=Requisas-RolesList","El registro del Rol fue eliminado satisfactoriamente!");
+                    Site::redirectToWithMsg("index.php?page=Requisas-RolesList","Role was deleted successfully!");
                 }
-
                 break;
         }
     }
@@ -92,13 +89,9 @@ class RolesForm extends PrivateController{
         $this->rol["rolesdsc"],
         $this->rol["rolescod"]);
         $this->viewData["rol"]=$this->rol;
-
-        //Para no poder editar informacion en otras partes que no sea en modo editar
         $this ->viewData["readonly"]=
         ($this->viewData["mode"] === 'DSP' 
         || $this->viewData["mode"] === 'DEL')? 'readonly':'';
         $this->viewData["showConfirm"]=($this->viewData["mode"] !== 'DSP');
-
-
     }
 }

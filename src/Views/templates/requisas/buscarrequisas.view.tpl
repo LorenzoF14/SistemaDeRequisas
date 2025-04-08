@@ -2,6 +2,7 @@
 <button onclick="imprimirTabla()" class="primary">
     <i class="fa-solid fa-print"></i> Print Table
 </button>
+{{if buscar_enable}}
 <section class="px-4 py-4">
     <section class="grid">
         <form action="index.php?page=Requisas-BuscarRequisas" method="post" class="row">
@@ -10,6 +11,7 @@
         </form>
     </section>
 </section>
+{{endif buscar_enable}}
 <section class="WWList">
     <table>
         <thead>

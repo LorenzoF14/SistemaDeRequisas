@@ -19,8 +19,6 @@ class RolesD extends Table{
     }
 
     public static function agregarRoles($rol){
-        
-        //unset($rol['rolescod']);
         unset($rol['creado']);
         unset($rol['actualizado']);
         
@@ -34,7 +32,6 @@ class RolesD extends Table{
         return self::executeNonQuery($sqlstr,$rol);
     }
 
-    //DataFirst
     public static function actualizarRoles($rol){
         unset($rol['creado']);
         unset($rol['actualizado']);
